@@ -25,4 +25,25 @@ export class AppComponent {
       console.log(snap.val())
     });
   }
+
+  initDB() {
+    let categories = firebase.database().ref('categories');
+    let monthlyBudget = firebase.database().ref('monthly-budget');
+
+    let budgetCategories = ['Mortgage/Rent', 'Electricity', 'Mobile Phone', 'Cable',
+      'Groceries', 'Entertainment', 'Water/Sewer', 'Auto Loan', 'Dining Out',
+      'Auto Ins', 'HO Ins', 'Rainy Day Fund', 'Vacation Fund', 'Retirement']
+    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    budgetCategories.forEach(category => {
+      const categoryRef = categories.push({name: category});
+      months.forEach(month => {
+        monthlyBudget.push({
+          month: month,
+          amount: 0,
+          category: categoryRef.key
+        })
+      })
+    })
+  }
 }
