@@ -8,6 +8,7 @@ import * as firebase from "firebase";
 })
 export class AppComponent {
   title = 'app works!';
+  budgetData: any;
 
   constructor() {
     let config = {
@@ -19,31 +20,53 @@ export class AppComponent {
     };
 
     firebase.initializeApp(config);
-
-    let root = firebase.database().ref();
-    root.on('value', function (snap) {
-      console.log(snap.val())
-    });
+    this.getBudget();
   }
 
   initDB() {
     let categories = firebase.database().ref('categories');
-    let monthlyBudget = firebase.database().ref('monthly-budget');
-
-    let budgetCategories = ['Mortgage/Rent', 'Electricity', 'Mobile Phone', 'Cable',
-      'Groceries', 'Entertainment', 'Water/Sewer', 'Auto Loan', 'Dining Out',
-      'Auto Ins', 'HO Ins', 'Rainy Day Fund', 'Vacation Fund', 'Retirement']
-    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    let budgetCategories = ['Mortgage', 'Electricity', 'Mobile Phone', 'Cable',
+      'Groceries', 'Entertainment', 'Water', 'Auto Loan', 'Dining Out',
+      'Auto Ins', 'HO Ins', 'Rainy Day Fund', 'Vacation Fund', 'Retirement'];
     budgetCategories.forEach(category => {
-      const categoryRef = categories.push({name: category});
-      months.forEach(month => {
-        monthlyBudget.push({
-          month: month,
-          amount: 0,
-          category: categoryRef.key
-        })
-      })
+      const categoryRef = categories.push({
+        name: category, jan: 0, feb: 0, mar: 0,
+        apr: 0, may: 0, jun: 0, jul: 0, aug: 0,
+        sep: 0, oct: 0, nov: 0, dec: 0
+      });
     })
+
+  }
+
+  getBudget() {
+
+    let budget = firebase.database().ref('categories');
+    this.budgetData = [];
+    budget.on('child_added', (snap) => {
+      let item = snap.val();
+      item.key = snap.key;
+      this.budgetData.push(item)
+    });
+    budget.on('child_changed', (snap) => {
+      let item = snap.val();
+      item.key = snap.key;
+      let index = this.budgetData.findIndex(category => {
+        return category.key === item.key;
+      });
+      this.budgetData[index] = item;
+    });
+  }
+
+  updateData(event) {
+    let category = event.data.name;
+    let field = event.column.field;
+    let item = this.budgetData.filter(function (c) {
+      return c.name === category;
+    });
+
+    let update = {};
+    update[field] = parseInt(item[0][field], 10);
+    firebase.database().ref(`categories/${event.data.key}`).update(update)
+
   }
 }

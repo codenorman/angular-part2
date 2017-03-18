@@ -1,4 +1,19 @@
 <h1>
   {{title}}
 </h1>
-<button (click)="initDB()">Initialize DB</button>
+<button pButton type="button" (click)="initDB()" label="Initialize DB"></button>
+<p-dataTable [value]="budgetData" [editable]="true"  (onEditComplete)="updateData($event) ">
+  <p-column field="name" header="Category"  ></p-column>
+  <p-column field="jan" header="January" [editable]="true"  ></p-column>
+  <p-column field="feb" header="February" [editable]="true"></p-column>
+  <p-column field="mar" header="March" [editable]="true"></p-column>
+  <p-column field="apr" header="April" [editable]="true"></p-column>
+  <p-column field="may" header="May" [editable]="true"></p-column>
+  <p-column field="jun" header="June" [editable]="true"></p-column>
+  <p-column field="jul" header="July" [editable]="true"></p-column>
+  <p-column field="aug" header="August" [editable]="true"></p-column>
+  <p-column field="sep" header="September" [editable]="true"></p-column>
+  <p-column field="oct" header="October" [editable]="true"></p-column>
+  <p-column field="nov" header="November" [editable]="true"></p-column>
+  <p-column field="dec" header="December" [editable]="true" ></p-column>
+</p-dataTable>
