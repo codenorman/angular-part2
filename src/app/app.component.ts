@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import * as firebase from "firebase";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app works!';
+
+  constructor() {
+    let config = {
+      apiKey: "AIzaSyAr3Bg2tJBrf_c9o6W0EK1B17RiHbu1hPw",
+      authDomain: "budget-app-7f40c.firebaseapp.com",
+      databaseURL: "https://budget-app-7f40c.firebaseio.com",
+      storageBucket: "budget-app-7f40c.appspot.com",
+      messagingSenderId: "792611408752"
+    };
+
+    firebase.initializeApp(config);
+
+    let root = firebase.database().ref();
+    root.on('value', function (snap) {
+      console.log(snap.val())
+    });
+  }
 }
