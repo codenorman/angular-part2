@@ -1,8 +1,10 @@
 <h1>
   {{title}}
 </h1>
+<p-chart #chart type="pie" [data]="chartData" width="200" height="200" [options]="chartOptions"></p-chart>
+
 <button pButton type="button" (click)="initDB()" label="Initialize DB"></button>
-<p-dataTable [value]="budgetData" [editable]="true"  (onEditComplete)="updateData($event) ">
+<p-dataTable [value]="budgetData" [editable]="true"  (onEditComplete)="updateData($event, chart)" (onRowClick)="updateChart($event, chart)">
   <p-column field="name" header="Category"  ></p-column>
   <p-column field="jan" header="January" [editable]="true"  ></p-column>
   <p-column field="feb" header="February" [editable]="true"></p-column>
