@@ -7,11 +7,12 @@ import * as firebase from "firebase";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'Budget Application';
   budgetData: any;
   chartData: any;
   chartOptions: any;
   selectedRow: any;
+  selectedCategory: any;
 
   constructor() {
     this.chartOptions = {
@@ -48,6 +49,7 @@ export class AppComponent {
 
   getBudget() {
     let budget = firebase.database().ref('categories');
+
     this.budgetData = [];
     budget.on('child_added', (snap) => {
       let item = snap.val();
@@ -64,9 +66,11 @@ export class AppComponent {
     });
   }
 
-  updateData(event,chart) {
+  updateData(event, chart) {
+    console.log(event)
+
     let category = event.data.name;
-    let field = event.column.field;
+    let field = event.field;
     let item = this.budgetData.filter(function (c) {
       return c.name === category;
     });
@@ -78,8 +82,7 @@ export class AppComponent {
   }
 
   updateChart(event, chart) {
-    if (this.selectedRow !== event.data) {
-      this.selectedRow = event.data;
+
 
       let labels = ['jan', 'feb', 'mar', 'apr', 'may', 'june',
         'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
@@ -138,5 +141,4 @@ export class AppComponent {
         chart.reinit();
       }, 100);
     }
-  }
 }

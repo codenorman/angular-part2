@@ -1,21 +1,148 @@
 <h1>
   {{title}}
 </h1>
+
 <p-chart #chart type="pie" [data]="chartData" width="200" height="200" [options]="chartOptions"></p-chart>
 
 <button pButton type="button" (click)="initDB()" label="Initialize DB"></button>
-<p-dataTable [value]="budgetData" [editable]="true"  (onEditComplete)="updateData($event, chart)" (onRowClick)="updateChart($event, chart)">
-  <p-column field="name" header="Category"  ></p-column>
-  <p-column field="jan" header="January" [editable]="true"  ></p-column>
-  <p-column field="feb" header="February" [editable]="true"></p-column>
-  <p-column field="mar" header="March" [editable]="true"></p-column>
-  <p-column field="apr" header="April" [editable]="true"></p-column>
-  <p-column field="may" header="May" [editable]="true"></p-column>
-  <p-column field="jun" header="June" [editable]="true"></p-column>
-  <p-column field="jul" header="July" [editable]="true"></p-column>
-  <p-column field="aug" header="August" [editable]="true"></p-column>
-  <p-column field="sep" header="September" [editable]="true"></p-column>
-  <p-column field="oct" header="October" [editable]="true"></p-column>
-  <p-column field="nov" header="November" [editable]="true"></p-column>
-  <p-column field="dec" header="December" [editable]="true" ></p-column>
-</p-dataTable>
+<!--<p-table [value]="budgetData" [editable]="true"  (onEditComplete)="updateData($event, chart)" (onRowClick)="updateChart($event, chart)">-->
+<p-table [value]="budgetData" autoLayout="true" selectionMode="single" (onEditComplete)="updateData($event, chart)" [(selection)]="selectedCategory" (onRowSelect)="updateChart($event, chart)">
+  <ng-template pTemplate="header">
+      <tr>
+        <th>Category</th>
+        <th>January</th>
+        <th>February</th>
+        <th>March</th>
+        <th>April</th>
+        <th>May</th>
+        <th>June</th>
+        <th>July</th>
+        <th>August</th>
+        <th>September</th>
+        <th>October</th>
+        <th>November</th>
+        <th>December</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-budgetData>
+    <tr [pSelectableRow]="budgetData">
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'name'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.name">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.name}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'jan'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.jan">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.jan}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'feb'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.feb">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.feb}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'mar'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.mar">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.mar}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'apr'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.apr">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.apr}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'may'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.may">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.may}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'jun'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.jun">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.jun}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'jul'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.jul">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.jul}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'aug'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.aug">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.aug}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'sep'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.sep">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.sep}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'oct'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.oct">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.oct}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'nov'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.nov">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.nov}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+      <td [pEditableColumn]="budgetData" [pEditableColumnField]="'dec'">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input type="text" [(ngModel)]="budgetData.dec">
+          </ng-template>
+          <ng-template pTemplate="output">{{budgetData.dec}}
+          </ng-template>
+        </p-cellEditor>
+        </td>
+    </tr>
+  </ng-template>
+</p-table>
