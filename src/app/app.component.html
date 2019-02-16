@@ -1,10 +1,10 @@
 <h1>
   {{title}}
 </h1>
+<button *ngIf="budgetData.length===0" pButton type="button" (click)="initDB()" label="Initialize DB"></button>
 
 <p-chart #chart type="pie" [data]="chartData" width="200" height="200" [options]="chartOptions"></p-chart>
 
-<button pButton type="button" (click)="initDB()" label="Initialize DB"></button>
 <!--<p-table [value]="budgetData" [editable]="true"  (onEditComplete)="updateData($event, chart)" (onRowClick)="updateChart($event, chart)">-->
 <p-table [value]="budgetData" autoLayout="true" selectionMode="single" (onEditComplete)="updateData($event, chart)" [(selection)]="selectedCategory" (onRowSelect)="updateChart($event, chart)">
   <ng-template pTemplate="header">
